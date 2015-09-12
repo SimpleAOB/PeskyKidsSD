@@ -21,9 +21,9 @@ namespace PeskyKidsSD
         /// <summary>
         /// Change the main message, title, and if it's password protected (optional) of the Input Modal
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="title"></param>
-        /// <param name="password"></param>
+        /// <param name="message">Required</param>
+        /// <param name="title">Required</param>
+        /// <param name="password">Optional</param>
         public void displaySettings(string message, string title, bool password = false)
         {
             this.Text = title;

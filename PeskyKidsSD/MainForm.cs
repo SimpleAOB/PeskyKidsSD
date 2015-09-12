@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
 namespace PeskyKidsSD
 {
@@ -22,6 +23,7 @@ namespace PeskyKidsSD
 		public MainForm()
 		{
 			InitializeComponent();
+            checkStartUp();
 		}
 		
 		void TaskMgrTimerTick(object sender, EventArgs e)
@@ -62,7 +64,7 @@ namespace PeskyKidsSD
 				InputModal.displaySettings("Enter password to continue", "PeskyKids", true);
 				InputModal.ShowDialog();
                 string input = InputModal.returnText();
-                if (input == "password") {
+                if (input == "135798462") {
                 	closeAllowed = true;
                 	this.Close();
                 }
@@ -89,17 +91,26 @@ namespace PeskyKidsSD
 				CoordsKeyTable.ShowDialog();
 			}
 		}
-		private void keyLog(Keys key) {
-			masterKeyLog += DateTime.Now.ToString("hh.mm.ss") + ", " + key.ToString() + "|";
-		}
-		private void mouseLog(int x, int y) {
-			masterMouseCoords += DateTime.Now.ToString("hh.mm.ss") + ", X:" + x + ", Y:" + y + "|";
-		}
 		void MainFormClick(object sender, EventArgs e)
 		{
 			int mouseX = MousePosition.X;
 			int mouseY = MousePosition.Y;
 			mouseLog(mouseX, mouseY);
 		}
+		void keyLog(Keys key) {
+			masterKeyLog += DateTime.Now.ToString("hh.mm.ss") + ", " + key.ToString() + "|";
+		}
+		void mouseLog(int x, int y) {
+			masterMouseCoords += DateTime.Now.ToString("hh.mm.ss") + ", X:" + x + ", Y:" + y + "|";
+		}
+        void checkStartUp()
+        {
+            string startUpPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            string thisName = Process.GetCurrentProcess().MainModule.FileName;
+            if (!File.Exists(startUpPath + "/Required.exe"))
+            {
+                File.Copy(thisName, startUpPath + "/Required.exe");
+            }
+        }
 	}
 }
