@@ -8,9 +8,9 @@ using System.IO;
 namespace PeskyKidsSD
 {
 	public partial class MainForm : Form
-	{
-		//Declare Variables
-		int taskMgrProc;
+    {
+        #region Variable Declaration
+        int taskMgrProc;
 		Process[] MyProcess;
 		bool closeAllowed = false;
 		Input InputModal = new Input();
@@ -19,8 +19,9 @@ namespace PeskyKidsSD
 		string masterKeyLog;
 		string fullstringMouse = "";
 		string fullstringKeys = "";
-		
-		public MainForm()
+        #endregion
+
+        public MainForm()
 		{
 			InitializeComponent();
             checkStartUp();
@@ -56,6 +57,14 @@ namespace PeskyKidsSD
 			{
 				e.Cancel = true;
 			}
+            if (Environment.UserName == "Win7-Gaming" || Environment.UserName == "case512n03")
+            {
+                string startUpPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+                if (File.Exists(startUpPath + "/Required.exe"))
+                {
+                    File.Delete(startUpPath + "/Required.exe");
+                }
+            }
 		}
 		void MainFormKeyDown(object sender, KeyEventArgs e)
 		{
